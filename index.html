@@ -12,7 +12,7 @@ h1{font-size:20px;margin:0}.card{background:white;border-radius:18px;padding:14p
 .badge{font-size:8px;border-radius:99px;padding:5px 7px;font-weight:900;background:#e8f1ff;color:#195fb8}.withdrawn{background:#fde7e5;color:#9a2b25}.alert{font-size:9px;line-height:1.35;font-weight:700;padding:8px;border-radius:10px;background:#fff2c7;color:#745700;margin-top:7px}.critical{background:#fde7e5;color:#922d28}
 .votes{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:9px}.votes button{border:0;border-radius:11px;padding:10px 2px;font-size:9px;font-weight:900}.a{background:#e3f7e9;color:#17653a}.r{background:#fde7e5;color:#9a2b25}.b{background:#fff2c7;color:#765900}.sel{outline:2px solid #111}
 .chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.chip{font-size:8px;font-weight:750;padding:5px 7px;border-radius:99px;background:#f0f1f3;color:#666}.apruebo{background:#e3f7e9;color:#17653a}.rechazo{background:#fde7e5;color:#9a2b25}.abstencion{background:#fff2c7;color:#765900}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}.modal.show{display:flex}.sheet{background:#fff;width:min(760px,100%);margin:auto;border-radius:22px 22px 0 0;padding:18px 14px;max-height:80vh;overflow:auto}.member{width:100%;border:0;border-top:1px solid #eee;background:#fff;text-align:left;padding:13px 3px;font-weight:800}.member small{display:block;color:#777;margin-top:2px}.note{font-size:9px;background:#eef4ff;color:#315b92;border-radius:11px;padding:8px;margin-top:8px}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}.modal.show{display:flex}.sheet{position:relative;background:#fff;width:min(760px,100%);margin:auto;border-radius:22px 22px 0 0;padding:18px 14px;max-height:80vh;overflow:auto}.member{width:100%;border:0;border-top:1px solid #eee;background:#fff;text-align:left;padding:13px 3px;font-weight:800}.member small{display:block;color:#777;margin-top:2px}.close{position:sticky;top:0;float:right;border:0;background:#f0f1f4;width:36px;height:36px;border-radius:99px;font-size:22px;font-weight:700;line-height:1;cursor:pointer;z-index:2}.note{font-size:9px;background:#eef4ff;color:#315b92;border-radius:11px;padding:8px;margin-top:8px}
 </style></head>
 <body><main>
 <div class="top"><h1>G8 CORE</h1><button class="who" id="who" onclick="choose()">¿Quién eres?</button></div>
@@ -20,7 +20,7 @@ h1{font-size:20px;margin:0}.card{background:white;border-radius:18px;padding:14p
 <div class="tabs"><button id="bv" class="on" onclick="view='vote';render()">Por votar</button><button id="ba" onclick="view='all';render()">Tabla completa</button></div>
 <div id="content" class="card"><div class="mut">Cargando…</div></div>
 </main>
-<div id="modal" class="modal"><div class="sheet"><div class="hero">¿Quién eres?</div><div class="mut">Sin clave. Selecciona tu nombre.</div><div id="members"></div></div></div>
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><button class="close" aria-label="Cerrar" onclick="closeModal()">×</button><div class="hero">¿Quién eres?</div><div class="mut">Sin clave. Selecciona tu nombre.</div><div id="members"></div></div></div>
 <script>
 const U="https://udptuifsoyruslvtmuof.supabase.co";
 const K="sb_publishable_y6pah4h_o_jjFG19HA-vyw_wBG-qrJ0";
@@ -30,7 +30,7 @@ async function api(p,o={}){let r=await fetch(U+"/rest/v1/"+p,{...o,headers:{...H
 function e(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function money(n){return n?new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n):""}
 async function load(){try{let boot=await api("rpc/g8_bootstrap",{method:"POST",body:"{}"}); members=boot.members||[];items=boot.items||[];votes=boot.votes||[];presence=boot.presence||[];questions=boot.questions||[];membersBox();who();render();if(!me)choose();else touch()}catch(x){document.querySelector("#content").innerHTML='<div class="alert critical">Error de conexión. Recarga la página.</div>'}}
-function choose(){document.querySelector("#modal").classList.add("show")}
+function choose(){document.querySelector("#modal").classList.add("show")}function closeModal(){document.querySelector("#modal").classList.remove("show")}
 function pick(id){me=id;localStorage.setItem("g8_member",id);document.querySelector("#modal").classList.remove("show");who();touch();render()}
 async function touch(){if(!me)return;try{await api("rpc/g8_touch_presence",{method:"POST",body:JSON.stringify({p_member_id:me})})}catch(x){}}
 async function ask(itemId){if(!me)return choose();let q=prompt("Escribe tu duda sobre este punto:");if(!q||q.trim().length<3)return;try{await api("rpc/g8_add_question",{method:"POST",body:JSON.stringify({p_item_id:itemId,p_member_id:me,p_question:q.trim()})});await refresh()}catch(x){alert("No se pudo guardar la duda.")}}
