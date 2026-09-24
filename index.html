@@ -23,8 +23,8 @@ h1{font-size:20px;margin:0}.card{background:white;border-radius:18px;padding:14p
 <div id="modal" class="modal"><div class="sheet"><div class="hero">¿Quién eres?</div><div class="mut">Sin clave. Selecciona tu nombre.</div><div id="members"></div></div></div>
 <script>
 const U="https://udptuifsoyruslvtmuof.supabase.co";
-const K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkcHR1aWZzb3lydXNsdnRtdW9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNTAyOTIsImV4cCI6MjEwMjcyNjI5Mn0.TTsUGZhMlk005RwF7_igw6QatlmIxyHfnXCJNJv6Vv4";
-const H={apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json"};
+const K="sb_publishable_y6pah4h_o_jjFG19HA-vyw_wBG-qrJ0";
+const H={apikey:K,"Content-Type":"application/json"};
 let members=[],items=[],votes=[],me=localStorage.getItem("g8_member")||"",view="vote";
 async function api(p,o={}){let r=await fetch(U+"/rest/v1/"+p,{...o,headers:{...H,...(o.headers||{})}});if(!r.ok)throw Error(await r.text());let t=await r.text();return t?JSON.parse(t):[]}
 function e(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
