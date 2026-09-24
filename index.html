@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G8 CORE · Votaciones</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f7;color:#171719;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:760px;margin:auto;padding:12px 12px 80px}.top{position:sticky;top:0;background:#f5f5f7e8;backdrop-filter:blur(15px);display:flex;justify-content:space-between;align-items:center;padding:10px 0;z-index:4}
+h1{font-size:20px;margin:0}.card{background:white;border-radius:18px;padding:14px;margin:9px 0}.hero{font-size:23px;font-weight:900;margin:4px 0}.mut{font-size:11px;color:#74747c;line-height:1.4}
+.who{border:0;border-radius:99px;background:#111;color:#fff;padding:9px 12px;font-weight:800}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.tabs button{border:0;border-radius:12px;padding:10px;font-weight:800;background:#fff}.tabs .on{background:#111;color:#fff}
+.point{border-top:1px solid #e9e9ed;padding:14px 0}.point:first-child{border:0;padding-top:0}.head{display:grid;grid-template-columns:42px 1fr auto;gap:8px}.code{background:#f0f1f4;border-radius:10px;padding:9px 4px;text-align:center;font-size:10px;font-weight:900}.title{font-size:14px;font-weight:900}.territory,.count{font-size:9px;color:#777;margin-top:3px}.summary{font-size:11px;line-height:1.4;margin-top:8px}.amount{font-size:10px;font-weight:850;margin-top:5px}
+.badge{font-size:8px;border-radius:99px;padding:5px 7px;font-weight:900;background:#e8f1ff;color:#195fb8}.withdrawn{background:#fde7e5;color:#9a2b25}.alert{font-size:9px;line-height:1.35;font-weight:700;padding:8px;border-radius:10px;background:#fff2c7;color:#745700;margin-top:7px}.critical{background:#fde7e5;color:#922d28}
+.votes{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:9px}.votes button{border:0;border-radius:11px;padding:10px 2px;font-size:9px;font-weight:900}.a{background:#e3f7e9;color:#17653a}.r{background:#fde7e5;color:#9a2b25}.b{background:#fff2c7;color:#765900}.sel{outline:2px solid #111}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.chip{font-size:8px;font-weight:750;padding:5px 7px;border-radius:99px;background:#f0f1f3;color:#666}.apruebo{background:#e3f7e9;color:#17653a}.rechazo{background:#fde7e5;color:#9a2b25}.abstencion{background:#fff2c7;color:#765900}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}.modal.show{display:flex}.sheet{background:#fff;width:min(760px,100%);margin:auto;border-radius:22px 22px 0 0;padding:18px 14px;max-height:80vh;overflow:auto}.member{width:100%;border:0;border-top:1px solid #eee;background:#fff;text-align:left;padding:13px 3px;font-weight:800}.member small{display:block;color:#777;margin-top:2px}.note{font-size:9px;background:#eef4ff;color:#315b92;border-radius:11px;padding:8px;margin-top:8px}
+</style></head>
+<body><main>
+<div class="top"><h1>G8 CORE</h1><button class="who" id="who" onclick="choose()">¿Quién eres?</button></div>
+<div class="card"><div class="mut">Sesión Ordinaria 809 · 24/09/2026</div><div class="hero">Votaciones en vivo</div><div class="mut">Cada CORE selecciona su nombre y registra Apruebo, Rechazo o Abstención. Las posiciones se actualizan para todos.</div><div class="note">Herramienta de coordinación. Muestra antecedentes y posiciones declaradas; no recomienda cómo votar.</div><div id="online" class="count" style="margin-top:8px"></div></div>
+<div class="tabs"><button id="bv" class="on" onclick="view='vote';render()">Por votar</button><button id="ba" onclick="view='all';render()">Tabla completa</button></div>
+<div id="content" class="card"><div class="mut">Cargando…</div></div>
+</main>
+<div id="modal" class="modal"><div class="sheet"><div class="hero">¿Quién eres?</div><div class="mut">Sin clave. Selecciona tu nombre.</div><div id="members"></div></div></div>
+<script>
+const U="https://udptuifsoyruslvtmuof.supabase.co";
+const K="sb_publishable_y6pah4h_o_jjFG19HA-vyw_wBG-qrJ0";
+const H={apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json"};
+let members=[],items=[],votes=[],presence=[],questions=[],me=localStorage.getItem("g8_member")||"",view="vote";
+async function api(p,o={}){let r=await fetch(U+"/rest/v1/"+p,{...o,headers:{...H,...(o.headers||{})}});if(!r.ok)throw Error(await r.text());let t=await r.text();return t?JSON.parse(t):[]}
+function e(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function money(n){return n?new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n):""}
+async function load(){try{let boot=await api("rpc/g8_bootstrap",{method:"POST",body:"{}"}); members=boot.members||[];items=boot.items||[];votes=boot.votes||[];presence=boot.presence||[];questions=boot.questions||[];membersBox();who();render();if(!me)choose();else touch()}catch(x){document.querySelector("#content").innerHTML='<div class="alert critical">Error de conexión. Recarga la página.</div>'}}
+function choose(){document.querySelector("#modal").classList.add("show")}
+function pick(id){me=id;localStorage.setItem("g8_member",id);document.querySelector("#modal").classList.remove("show");who();touch();render()}
+async function touch(){if(!me)return;try{await api("rpc/g8_touch_presence",{method:"POST",body:JSON.stringify({p_member_id:me})})}catch(x){}}
+async function ask(itemId){if(!me)return choose();let q=prompt("Escribe tu duda sobre este punto:");if(!q||q.trim().length<3)return;try{await api("rpc/g8_add_question",{method:"POST",body:JSON.stringify({p_item_id:itemId,p_member_id:me,p_question:q.trim()})});await refresh()}catch(x){alert("No se pudo guardar la duda.")}}
+async function refresh(){let boot=await api("rpc/g8_bootstrap",{method:"POST",body:"{}"});members=boot.members||[];items=boot.items||[];votes=boot.votes||[];presence=boot.presence||[];questions=boot.questions||[];render()}
+function who(){let m=members.find(x=>x.id===me);document.querySelector("#who").textContent=m?m.short_name:"¿Quién eres?"}
+function membersBox(){document.querySelector("#members").innerHTML=members.map(m=>`<button class="member" onclick="pick('${m.id}')">${e(m.name)}<small>${e(m.province||"")}</small></button>`).join("")}
+function vf(i,m){return votes.find(v=>v.item_id===i&&v.member_id===m)?.vote||""}
+async function cast(i,v){if(!me)return choose();try{await api("rpc/g8_cast_vote",{method:"POST",body:JSON.stringify({p_item_id:i,p_member_id:me,p_vote:v})});let boot=await api("rpc/g8_bootstrap",{method:"POST",body:"{}"});votes=boot.votes||[];render()}catch(x){alert("No se pudo guardar. Recarga e intenta nuevamente.")}}
+function point(p){let my=vf(p.id,me),withdraw=p.status==="withdrawn";let chips=members.map(m=>{let v=vf(p.id,m.id),t=v==="apruebo"?"Apr.":v==="rechazo"?"Rec.":v==="abstencion"?"Abst.":"—";return `<span class="chip ${v}">${e(m.short_name)} · ${t}</span>`}).join("");return `<div class="point"><div class="head"><div class="code">${e(p.item_code)}</div><div><div class="title">${e(p.title)}</div><div class="territory">${e(p.territory||"")}</div></div><span class="badge ${withdraw?"withdrawn":""}">${withdraw?"RETIRADO":p.vote_required?"VOTACIÓN":"INFO"}</span></div><div class="summary">${e(p.summary||"")}</div>${p.amount_clp?`<div class="amount">${money(p.amount_clp)}</div>`:""}${p.alert_text?`<div class="alert ${p.alert_level==="critical"?"critical":""}">${e(p.alert_text)}</div>`:""}${p.vote_required&&!withdraw?`<div class="votes"><button class="a ${my==="apruebo"?"sel":""}" onclick="cast('${p.id}','apruebo')">APRUEBO</button><button class="r ${my==="rechazo"?"sel":""}" onclick="cast('${p.id}','rechazo')">RECHAZO</button><button class="b ${my==="abstencion"?"sel":""}" onclick="cast('${p.id}','abstencion')">ABSTENCIÓN</button></div><div class="chips">${chips}</div><div class="count">${votes.filter(v=>v.item_id===p.id).length} de ${members.length} posiciones registradas</div>`:""}<button onclick="ask('${p.id}')" style="margin-top:9px;border:0;border-radius:10px;padding:8px 10px;font-weight:800">Tengo una duda</button>${questions.filter(q=>q.item_id===p.id).map(q=>{let m=members.find(x=>x.id===q.member_id);return `<div class="note"><b>${e(m?.short_name||"CORE")}:</b> ${e(q.question)}${q.answer?`<br><b>Respuesta:</b> ${e(q.answer)}`:""}</div>`}).join("")}</div>`}
+function render(){let on=document.querySelector("#online");if(on){let names=presence.map(p=>members.find(m=>m.id===p.member_id)?.short_name).filter(Boolean);on.textContent=`En línea: ${names.length}/${members.length}${names.length?" · "+names.join(", "):""}`;}document.querySelector("#bv").classList.toggle("on",view==="vote");document.querySelector("#ba").classList.toggle("on",view==="all");let a=view==="vote"?items.filter(x=>x.vote_required||x.status==="withdrawn"):items;document.querySelector("#content").innerHTML=a.map(point).join("")}
+setInterval(async()=>{try{await touch();await refresh()}catch(x){}},5000);load();
+</script></body></html>
