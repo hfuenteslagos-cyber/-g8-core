@@ -38,7 +38,7 @@ h1{font-size:20px;margin:0}.card{background:white;border-radius:18px;padding:14p
 <script>
 const U="https://udptuifsoyruslvtmuof.supabase.co";
 const K="sb_publishable_y6pah4h_o_jjFG19HA-vyw_wBG-qrJ0";
-const H={apikey:K,"Content-Type":"application/json"};
+const H={apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json"};
 let members=[],items=[],votes=[],presence=[],questions=[],me=localStorage.getItem("g8_member")||"",view="vote";let asking=new Set(),radarFilter="TODOS",radarProvince="TODAS",radarCommune="TODAS";
 const radarProjects=[
 {code:"2409306",name:"Asistencia técnica Plan de Desarrollo Territorial 2022–2030",commune:"TOCOPILLA",province:"TOCOPILLA",sector:"MULTISECTORIAL",unit:"GOBIERNO REGIONAL",cost:481635000,spent:110050665,core:"17589-24, 17956-25"},
@@ -51,10 +51,10 @@ const radarProjects=[
 {code:"40073381",name:"Cámaras de televigilancia con IA · Antofagasta, Calama y Tocopilla",commune:"REGIONAL",province:"INTERPROVINCIAL",sector:"SEGURIDAD",unit:"DPR",cost:17111266000,spent:0,core:"18068-25"},
 {code:"2403221-1",name:"Tamizaje de cáncer de pulmón · Antofagasta y Tocopilla",commune:"REGIONAL",province:"ANTOFAGASTA, TOCOPILLA",sector:"SALUD",unit:"SERV. SALUD",cost:1918677000,spent:75910564,core:"17187-23"}
 ];
-async function api(p,o={}){let r=await fetch(U+"/rest/v1/"+p,{...o,headers:{...H,...(o.headers||{})}});if(!r.ok)throw Error(await r.text());let t=await r.text();return t?JSON.parse(t):[]}
+async function api(p,o={}){let r=await fetch(U+"/rest/v1/"+p,{...o,headers:{...H,...(o.headers||{})}});let t=await r.text();if(!r.ok)throw Error("G8 API "+r.status+": "+t);return t?JSON.parse(t):[]}
 function e(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
 function money(n){return n?new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n):""}
-async function load(){try{let boot=await api("rpc/g8_bootstrap",{method:"POST",body:"{}"}); members=boot.members||[];items=boot.items||[];votes=boot.votes||[];presence=boot.presence||[];questions=boot.questions||[];membersBox();who();render();if(!me)choose();else touch()}catch(x){document.querySelector("#content").innerHTML='<div class="alert critical">Error de conexión. Recarga la página.</div>'}}
+async function load(){try{let boot=await api("rpc/g8_bootstrap",{method:"POST",body:"{}"}); members=boot.members||[];items=boot.items||[];votes=boot.votes||[];presence=boot.presence||[];questions=boot.questions||[];membersBox();who();render();if(!me)choose();else touch()}catch(x){console.error(x);document.querySelector("#content").innerHTML='<div class="alert critical"><b>No se pudo cargar G8.</b><br>La base de datos está disponible, pero esta sesión no logró conectarse. <button onclick="location.reload()" style="margin-left:6px;border:0;border-radius:8px;padding:6px 8px;font-weight:800">Reintentar</button></div>'}}
 function choose(){document.querySelector("#modal").classList.add("show")}function closeModal(){document.querySelector("#modal").classList.remove("show")}
 function pick(id){me=id;localStorage.setItem("g8_member",id);document.querySelector("#modal").classList.remove("show");who();touch();render()}
 async function touch(){if(!me)return;try{await api("rpc/g8_touch_presence",{method:"POST",body:JSON.stringify({p_member_id:me})})}catch(x){}}
