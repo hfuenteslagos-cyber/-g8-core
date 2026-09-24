@@ -1,93 +1,42 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>G8 CORE</title>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>G8 CORE · Votaciones</title>
 <style>
-:root{--bg:#f4f5f7;--card:#fff;--text:#111318;--muted:#74777f;--line:#e8e9ed;--blue:#1677ff;--security:#ff6b57;--education:#6c63ff;--works:#16a085;--society:#e67e22;--child:#e84393;--sustain:#27ae60;--prov:#607d8b;--yes:#dff7e8;--yesT:#12693b;--no:#ffe4e1;--noT:#a52a20;--abs:#fff1ba;--absT:#806000}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:var(--text)}button{font:inherit}.app{max-width:780px;margin:auto;padding:14px 12px 88px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}.brand{font-size:21px;font-weight:850}.lock{background:#111;color:#fff;border-radius:999px;padding:6px 9px;font-size:10px}.card{background:var(--card);border-radius:19px;padding:15px;margin:10px 0;box-shadow:0 1px 3px #0000000d}.eyebrow{font-size:10px;color:var(--muted);font-weight:850;letter-spacing:.07em;text-transform:uppercase}.big{font-size:24px;font-weight:850;line-height:1.05;margin:4px 0 7px}.muted{font-size:12px;color:var(--muted);line-height:1.35}.homegrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.homebtn{border:0;background:#fff;border-radius:18px;padding:17px 14px;text-align:left;box-shadow:0 1px 3px #0000000d}.homebtn b{font-size:15px}.homebtn span{display:block;font-size:10px;color:var(--muted);margin-top:5px;line-height:1.3}.page{display:none}.page.active{display:block}.back{border:0;background:#fff;border-radius:999px;padding:8px 11px;font-size:11px;font-weight:800}.section{font-size:10px;color:var(--muted);font-weight:850;letter-spacing:.06em;text-transform:uppercase;margin:17px 3px 7px}
-.people{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.person{background:#fff;border-radius:18px;padding:12px;box-shadow:0 1px 3px #0000000d}.personTop{display:flex;gap:10px;align-items:center}.photo{width:54px;height:54px;border-radius:50%;object-fit:cover;background:linear-gradient(145deg,#1f2937,#64748b);display:grid;place-items:center;color:#fff;font-weight:850;font-size:17px;flex:none}.person b{font-size:13px;line-height:1.1}.province{font-size:10px;color:var(--muted);margin-top:3px}.tags{margin-top:9px;display:flex;gap:4px;flex-wrap:wrap}.tag{font-size:8px;color:#fff;padding:4px 6px;border-radius:999px;font-weight:800}.security{background:var(--security)}.education{background:var(--education)}.works{background:var(--works)}.society{background:var(--society)}.child{background:var(--child)}.sustain{background:var(--sustain)}.prov{background:var(--prov)}
-.legend{display:flex;gap:5px;flex-wrap:wrap}.legend span{font-size:9px;border-radius:999px;padding:5px 7px;color:#fff;font-weight:750}
-.row{padding:13px 0;border-top:1px solid var(--line)}.row:first-child{border-top:0;padding-top:0}.rowhead{display:grid;grid-template-columns:37px 1fr auto;gap:8px;align-items:start}.num{width:35px;height:35px;border-radius:10px;background:#f0f1f4;display:grid;place-items:center;font-size:10px;font-weight:850}.rtitle{font-size:14px;font-weight:820;line-height:1.2}.meta{font-size:10px;color:var(--muted);margin-top:4px}.alert{font-size:9px;border-radius:999px;padding:5px 7px;background:#fff1ba;color:#806000;font-weight:800}.alert.red{background:#ffe4e1;color:#a52a20}
-.vote{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:9px}.vote button{border:0;border-radius:11px;padding:10px 4px;font-size:10px;font-weight:850}.yes{background:var(--yes);color:var(--yesT)}.no{background:var(--no);color:var(--noT)}.abs{background:var(--abs);color:var(--absT)}.selected{outline:2px solid #111}.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.chip{font-size:8px;background:#eff0f2;color:#6b6d73;border-radius:999px;padding:5px 6px}.chip.y{background:var(--yes);color:var(--yesT)}.chip.n{background:var(--no);color:var(--noT)}.chip.a{background:var(--abs);color:var(--absT)}
-.commission{display:flex;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--line)}.commission:first-child{border-top:0}.dot{width:12px;height:12px;border-radius:50%;flex:none}.commission b{font-size:13px}.commission .members{font-size:10px;color:var(--muted);margin-top:3px}
-.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:11px}.kpi{background:#f1f2f5;border-radius:13px;padding:9px;text-align:center}.kpi b{display:block;font-size:18px}.kpi span{font-size:9px;color:var(--muted)}
-.bottom{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(780px,100%);background:#fffffff5;backdrop-filter:blur(18px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom))}.bottom button{border:0;background:transparent;color:var(--muted);font-size:10px;font-weight:800;padding:8px 2px}.bottom .active{color:#111}
-@media(max-width:390px){.people{gap:7px}.person{padding:10px}.photo{width:47px;height:47px}.person b{font-size:12px}}
-</style></head><body><div class="app">
-<div class="top"><button id="back" class="back" style="visibility:hidden" onclick="go('home')">← Inicio</button><div class="brand">G8 CORE</div><div class="lock">PRIVADO</div></div>
-
-<section id="home" class="page active">
-<div class="card"><div class="eyebrow">Organización G8</div><div class="big">Todo en un lugar</div><div class="muted">Sesiones, posiciones declaradas, comisiones, actividades y minutas.</div></div>
-<div class="homegrid">
-<button class="homebtn" onclick="go('session')"><b>Sesión de hoy</b><span>Resumen, alertas y estado G8</span></button>
-<button class="homebtn" onclick="go('table')"><b>Tabla y votaciones</b><span>Puntos 1, 2, 3… y posición de cada CORE</span></button>
-<button class="homebtn" onclick="go('g8')"><b>Quiénes somos</b><span>8 consejeros, provincia y comisiones</span></button>
-<button class="homebtn" onclick="go('commissions')"><b>Comisiones</b><span>Mapa por color y quién participa</span></button>
-<button class="homebtn" onclick="go('activities')"><b>Actividades</b><span>Agenda, terreno e invitaciones</span></button>
-<button class="homebtn" onclick="go('minutes')"><b>Minutas</b><span>G8 general y vista territorial</span></button>
-</div></section>
-
-<section id="session" class="page">
-<div class="card"><div class="eyebrow">Sesión de hoy</div><div class="big">SO 809</div><div class="muted">24 septiembre · 09:00 · Antofagasta</div>
-<div class="kpis"><div class="kpi"><b>14</b><span>PUNTOS</span></div><div class="kpi"><b>10</b><span>VOTACIONES</span></div><div class="kpi"><b>4</b><span>ALERTAS</span></div></div></div>
-<div class="card"><div class="rtitle">Resumen ejecutivo</div><div class="muted" style="margin-top:6px">Foco: Quillagua, rebaja presupuestaria Tocopilla, Lanzaagua y consistencia documental de Astroturismo.</div></div>
-</section>
-
-<section id="table" class="page"><div class="card"><div class="eyebrow">SO 809</div><div class="big">Tabla y posiciones</div><div class="muted">Los colores muestran únicamente la posición que cada integrante registre.</div></div><div class="card" id="tableRows"></div></section>
-
-<section id="g8" class="page">
-<div class="card"><div class="eyebrow">Integrantes</div><div class="big">G8</div><div class="muted">Provincia y comisiones oficiales. Las fotos oficiales se incorporarán desde los perfiles CORE en la versión publicada.</div></div>
-<div class="people" id="people"></div>
-<div class="section">Colores</div><div class="card legend">
-<span class="security">Seguridad</span><span class="education">Educación</span><span class="works">Obras</span><span class="society">Sociedad Civil</span><span class="child">Infancia</span><span class="sustain">Sustentabilidad</span><span class="prov">Provincial</span>
-</div></section>
-
-<section id="commissions" class="page"><div class="card"><div class="eyebrow">Organización</div><div class="big">Comisiones G8</div><div class="muted">Permite ver rápidamente quién del G8 participa en cada materia.</div></div><div class="card" id="commissionList"></div></section>
-
-<section id="activities" class="page"><div class="card"><div class="eyebrow">Agenda</div><div class="big">Actividades</div></div><div class="card">
-<div class="row"><div class="rtitle">09:00 · SO 809</div><div class="meta">Pleno Consejo Regional · Antofagasta</div></div>
-<div class="row"><div class="rtitle">11:00 · SIT UCN</div><div class="meta">Seguridad pública · Online</div></div>
-<div class="row"><div class="rtitle">18:00 · Calidad del aire y salud</div><div class="meta">Colegio San Luis</div></div></div></section>
-
-<section id="minutes" class="page"><div class="card"><div class="eyebrow">Documentos</div><div class="big">Minutas</div></div><div class="card">
-<div class="row"><div class="rtitle">Minuta G8 · SO 809</div><div class="meta">Versión general compartible</div></div>
-<div class="row"><div class="rtitle">Minuta Humberto · SO 809</div><div class="meta">Tocopilla · María Elena · Quillagua · Seguridad · Educación</div></div></div></section>
-</div>
-
-<div class="bottom"><button id="nHome" class="active" onclick="go('home')">Inicio</button><button id="nSession" onclick="go('session')">Sesión</button><button id="nTable" onclick="go('table')">Votaciones</button><button id="nG8" onclick="go('g8')">G8</button></div>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f7;color:#171719;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+main{max-width:760px;margin:auto;padding:12px 12px 80px}.top{position:sticky;top:0;background:#f5f5f7e8;backdrop-filter:blur(15px);display:flex;justify-content:space-between;align-items:center;padding:10px 0;z-index:4}
+h1{font-size:20px;margin:0}.card{background:white;border-radius:18px;padding:14px;margin:9px 0}.hero{font-size:23px;font-weight:900;margin:4px 0}.mut{font-size:11px;color:#74747c;line-height:1.4}
+.who{border:0;border-radius:99px;background:#111;color:#fff;padding:9px 12px;font-weight:800}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px}.tabs button{border:0;border-radius:12px;padding:10px;font-weight:800;background:#fff}.tabs .on{background:#111;color:#fff}
+.point{border-top:1px solid #e9e9ed;padding:14px 0}.point:first-child{border:0;padding-top:0}.head{display:grid;grid-template-columns:42px 1fr auto;gap:8px}.code{background:#f0f1f4;border-radius:10px;padding:9px 4px;text-align:center;font-size:10px;font-weight:900}.title{font-size:14px;font-weight:900}.territory,.count{font-size:9px;color:#777;margin-top:3px}.summary{font-size:11px;line-height:1.4;margin-top:8px}.amount{font-size:10px;font-weight:850;margin-top:5px}
+.badge{font-size:8px;border-radius:99px;padding:5px 7px;font-weight:900;background:#e8f1ff;color:#195fb8}.withdrawn{background:#fde7e5;color:#9a2b25}.alert{font-size:9px;line-height:1.35;font-weight:700;padding:8px;border-radius:10px;background:#fff2c7;color:#745700;margin-top:7px}.critical{background:#fde7e5;color:#922d28}
+.votes{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:9px}.votes button{border:0;border-radius:11px;padding:10px 2px;font-size:9px;font-weight:900}.a{background:#e3f7e9;color:#17653a}.r{background:#fde7e5;color:#9a2b25}.b{background:#fff2c7;color:#765900}.sel{outline:2px solid #111}
+.chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}.chip{font-size:8px;font-weight:750;padding:5px 7px;border-radius:99px;background:#f0f1f3;color:#666}.apruebo{background:#e3f7e9;color:#17653a}.rechazo{background:#fde7e5;color:#9a2b25}.abstencion{background:#fff2c7;color:#765900}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}.modal.show{display:flex}.sheet{background:#fff;width:min(760px,100%);margin:auto;border-radius:22px 22px 0 0;padding:18px 14px;max-height:80vh;overflow:auto}.member{width:100%;border:0;border-top:1px solid #eee;background:#fff;text-align:left;padding:13px 3px;font-weight:800}.member small{display:block;color:#777;margin-top:2px}.note{font-size:9px;background:#eef4ff;color:#315b92;border-radius:11px;padding:8px;margin-top:8px}
+</style></head>
+<body><main>
+<div class="top"><h1>G8 CORE</h1><button class="who" id="who" onclick="choose()">¿Quién eres?</button></div>
+<div class="card"><div class="mut">Sesión Ordinaria 809 · 24/09/2026</div><div class="hero">Votaciones en vivo</div><div class="mut">Cada CORE selecciona su nombre y registra Apruebo, Rechazo o Abstención. Las posiciones se actualizan para todos.</div><div class="note">Herramienta de coordinación. Muestra antecedentes y posiciones declaradas; no recomienda cómo votar.</div></div>
+<div class="tabs"><button id="bv" class="on" onclick="view='vote';render()">Por votar</button><button id="ba" onclick="view='all';render()">Tabla completa</button></div>
+<div id="content" class="card"><div class="mut">Cargando…</div></div>
+</main>
+<div id="modal" class="modal"><div class="sheet"><div class="hero">¿Quién eres?</div><div class="mut">Sin clave. Selecciona tu nombre.</div><div id="members"></div></div></div>
 <script>
-const people=[
-{name:"Humberto",full:"Humberto Pablo Fuentes Lagos",prov:"Tocopilla",initial:"H",tags:[["Educación","education"],["Infancia","child"],["Seguridad","security"],["Prov. Tocopilla","prov"]]},
-{name:"Emilio",full:"Emilio Mavrakis Assad",prov:"El Loa",initial:"E",tags:[["Obras","works"],["Infancia","child"],["Seguridad","security"],["Prov. El Loa","prov"]]},
-{name:"Jorge",full:"Jorge Berna Mendoza",prov:"El Loa",initial:"J",tags:[["Obras","works"],["Sociedad Civil","society"],["Sustentabilidad","sustain"],["Prov. El Loa","prov"]]},
-{name:"Gonzalo",full:"Gonzalo Santolaya Goicovic",prov:"Antofagasta",initial:"G",tags:[["Sociedad Civil","society"],["Sustentabilidad","sustain"],["Prov. Antof.","prov"]]},
-{name:"Alejandro",full:"Alejandro Cifuentes Mancilla",prov:"Antofagasta",initial:"A",tags:[["Obras","works"],["Seguridad","security"],["Prov. Antof.","prov"]]},
-{name:"Paula",full:"Paula Celis Sierralta",prov:"Antofagasta",initial:"P",tags:[["Obras","works"],["Sociedad Civil","society"],["Infancia","child"],["Prov. Antof.","prov"]]},
-{name:"Yasna",full:"Yasna Meneses González",prov:"Antofagasta",initial:"Y",tags:[["Educación","education"],["Sociedad Civil","society"],["Infancia","child"],["Prov. Antof.","prov"]]},
-{name:"Duzanka",full:"Duzanka Flores Rojas",prov:"Antofagasta",initial:"D",tags:[["Educación","education"],["Infancia","child"],["Prov. Antof.","prov"]]}
-];
-const commissions=[
-["Seguridad Pública","security",["Humberto","Emilio","Alejandro"]],
-["Educación, Cultura, Ciencia y Tecnología","education",["Humberto","Yasna","Duzanka"]],
-["Obras Públicas y Transporte","works",["Emilio","Jorge","Alejandro","Paula"]],
-["Sociedad Civil y Participación","society",["Jorge","Gonzalo","Paula","Yasna"]],
-["Infancia y Juventud","child",["Humberto","Emilio","Paula","Yasna","Duzanka"]],
-["Sustentabilidad y RR.II.","sustain",["Jorge","Gonzalo"]],
-["Provincial de Tocopilla","prov",["Humberto"]],
-["Provincial de El Loa","prov",["Emilio","Jorge"]],
-["Provincial de Antofagasta","prov",["Gonzalo","Alejandro","Paula","Yasna","Duzanka"]]
-];
-const points=[
-["5","Modificaciones presupuestarias","Tocopilla / Regional","Rebaja programa Tocopilla · $681 MM","warn"],
-["8","Adenda Carabineros–GORE","Regional","Actualiza cartera y proyecto Lanzaagua",""],
-["9.b","Piscina Quillagua","María Elena / Quillagua","Aclarar etapa diseño vs ejecución","red"],
-["9.c","Plaza Acceso Nororiente","Tocopilla","RETIRADO DE TABLA","red"],
-["9.g","Lanzaagua Carabineros","Regional","Diferencia de monto en antecedentes","red"],
-["10.c","Astroturismo","Regional / Tocopilla","Revisar BIP y unidad técnica","warn"],
-["11","Caspana–Ayquina","El Loa","Despriorización proyecto anterior",""]
-];
-const votes={}; let current="Humberto";
-function renderPeople(){document.getElementById("people").innerHTML=people.map(p=>`<div class="person"><div class="personTop"><div class="photo">${p.initial}</div><div><b>${p.full}</b><div class="province">${p.prov}</div></div></div><div class="tags">${p.tags.map(t=>`<span class="tag ${t[1]}">${t[0]}</span>`).join("")}</div></div>`).join("")}
-function renderCommissions(){document.getElementById("commissionList").innerHTML=commissions.map(c=>`<div class="commission"><span class="dot ${c[1]}"></span><div><b>${c[0]}</b><div class="members">${c[2].join(" · ")}</div></div></div>`).join("")}
-function setVote(id,v){votes[id]=votes[id]||{};votes[id][current]=v;renderTable()}
-function renderTable(){document.getElementById("tableRows").innerHTML=points.map(p=>{let mine=(votes[p[0]]||{})[current];let chips=people.map(x=>{let v=(votes[p[0]]||{})[x.name],cl=v==="A"?"y":v==="R"?"n":v==="B"?"a":"";return `<span class="chip ${cl}">${x.name}${v?" · "+(v==="A"?"Apr.":v==="R"?"Rec.":"Abst."):""}</span>`}).join("");return `<div class="row"><div class="rowhead"><div class="num">${p[0]}</div><div><div class="rtitle">${p[1]}</div><div class="meta">${p[2]} · ${p[3]}</div></div>${p[4]?`<span class="alert ${p[4]==="red"?"red":""}">ALERTA</span>`:""}</div>${p[0]==="9.c"?"":`<div class="vote"><button class="yes ${mine==="A"?"selected":""}" onclick="setVote('${p[0]}','A')">APRUEBO</button><button class="no ${mine==="R"?"selected":""}" onclick="setVote('${p[0]}','R')">RECHAZO</button><button class="abs ${mine==="B"?"selected":""}" onclick="setVote('${p[0]}','B')">ABSTENCIÓN</button></div><div class="chips">${chips}</div>`}</div>`}).join("")}
-function go(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.getElementById("back").style.visibility=id==="home"?"hidden":"visible";document.querySelectorAll(".bottom button").forEach(x=>x.classList.remove("active"));let m={home:"nHome",session:"nSession",table:"nTable",g8:"nG8"};if(m[id])document.getElementById(m[id]).classList.add("active");window.scrollTo(0,0)}
-renderPeople();renderCommissions();renderTable();
+const U="https://udptuifsoyruslvtmuof.supabase.co";
+const K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVkcHR1aWZzb3lydXNsdnRtdW9mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNTAyOTIsImV4cCI6MjEwMjcyNjI5Mn0.TTsUGZhMlk005RwF7_igw6QatlmIxyHfnXCJNJv6Vv4";
+const H={apikey:K,Authorization:"Bearer "+K,"Content-Type":"application/json"};
+let members=[],items=[],votes=[],me=localStorage.getItem("g8_member")||"",view="vote";
+async function api(p,o={}){let r=await fetch(U+"/rest/v1/"+p,{...o,headers:{...H,...(o.headers||{})}});if(!r.ok)throw Error(await r.text());let t=await r.text();return t?JSON.parse(t):[]}
+function e(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function money(n){return n?new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n):""}
+async function load(){try{[members,items,votes]=await Promise.all([api("g8_members?active=eq.true&select=id,name,short_name,province&order=display_order"),api("g8_session_items?select=id,item_code,title,summary,territory,amount_clp,vote_required,alert_level,alert_text,status,display_order&order=display_order"),api("g8_votes?select=id,item_id,member_id,vote,updated_at")]);membersBox();who();render();if(!me)choose()}catch(x){document.querySelector("#content").innerHTML='<div class="alert critical">Error de conexión. Recarga la página.</div>'}}
+function choose(){document.querySelector("#modal").classList.add("show")}
+function pick(id){me=id;localStorage.setItem("g8_member",id);document.querySelector("#modal").classList.remove("show");who();render()}
+function who(){let m=members.find(x=>x.id===me);document.querySelector("#who").textContent=m?m.short_name:"¿Quién eres?"}
+function membersBox(){document.querySelector("#members").innerHTML=members.map(m=>`<button class="member" onclick="pick('${m.id}')">${e(m.name)}<small>${e(m.province||"")}</small></button>`).join("")}
+function vf(i,m){return votes.find(v=>v.item_id===i&&v.member_id===m)?.vote||""}
+async function cast(i,v){if(!me)return choose();let body={item_id:i,member_id:me,vote:v,updated_at:new Date().toISOString()};let r=await fetch(U+"/rest/v1/g8_votes?on_conflict=item_id,member_id",{method:"POST",headers:{...H,Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(body)});if(!r.ok)return alert("No se pudo guardar. Recarga e intenta nuevamente.");votes=await api("g8_votes?select=id,item_id,member_id,vote,updated_at");render()}
+function point(p){let my=vf(p.id,me),withdraw=p.status==="withdrawn";let chips=members.map(m=>{let v=vf(p.id,m.id),t=v==="apruebo"?"Apr.":v==="rechazo"?"Rec.":v==="abstencion"?"Abst.":"—";return `<span class="chip ${v}">${e(m.short_name)} · ${t}</span>`}).join("");return `<div class="point"><div class="head"><div class="code">${e(p.item_code)}</div><div><div class="title">${e(p.title)}</div><div class="territory">${e(p.territory||"")}</div></div><span class="badge ${withdraw?"withdrawn":""}">${withdraw?"RETIRADO":p.vote_required?"VOTACIÓN":"INFO"}</span></div><div class="summary">${e(p.summary||"")}</div>${p.amount_clp?`<div class="amount">${money(p.amount_clp)}</div>`:""}${p.alert_text?`<div class="alert ${p.alert_level==="critical"?"critical":""}">${e(p.alert_text)}</div>`:""}${p.vote_required&&!withdraw?`<div class="votes"><button class="a ${my==="apruebo"?"sel":""}" onclick="cast('${p.id}','apruebo')">APRUEBO</button><button class="r ${my==="rechazo"?"sel":""}" onclick="cast('${p.id}','rechazo')">RECHAZO</button><button class="b ${my==="abstencion"?"sel":""}" onclick="cast('${p.id}','abstencion')">ABSTENCIÓN</button></div><div class="chips">${chips}</div><div class="count">${votes.filter(v=>v.item_id===p.id).length} de ${members.length} posiciones registradas</div>`:""}</div>`}
+function render(){document.querySelector("#bv").classList.toggle("on",view==="vote");document.querySelector("#ba").classList.toggle("on",view==="all");let a=view==="vote"?items.filter(x=>x.vote_required||x.status==="withdrawn"):items;document.querySelector("#content").innerHTML=a.map(point).join("")}
+setInterval(async()=>{try{votes=await api("g8_votes?select=id,item_id,member_id,vote,updated_at");render()}catch(x){}},4000);load();
 </script></body></html>
